@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block head_title %}Log In{% endblock %}
+
+{% block content %}
+
+
+    
+
+<main>
+  <div class="login-clean mt-2">
+    <form method="post">
+      {% csrf_token %}
+      
+      <div class="illustration"><i class="icon ion-locked"></i></div>
+
+      <div class="form-group">
+        <input class="form-control {% if form.email.errors %}is-invalid{% endif %}" type="email" name="email" placeholder="Email" value='{{ form.email.value|default:"" }}'>
+        {% if form.email.errors %}
+        <div class="invalid-feedback">{{ form.email.errors }}</div>
+        {% endif %}
+      </div>
+      
+
+      <div class="form-group mt-3">
+        <input class="form-control {% if form.password.errors %}is-invalid{% endif %}" type="password" name="password" placeholder="Contraseña" value='{{ form.password.value|default:"" }}'>
+        {% if form.password.errors %}
+        <div class="invalid-feedback">{{ form.password.errors }}</div>
+        {% endif %}
+      </div>
+
+
+      
+      <div class="form-group">
+      <button class="btn btn-primary btn-block fw-bold" type="submit">Iniciar sesion</button>
+      </div>
+      
+    </div>
+  </form>
+</main>
+{% endblock content %}

@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head_title %}{{ user.username }} | Perfil{% endblock head_title %}
+
+{% block content %}
+<body class="perfil">
+    <section class="profile position-relative">
+        <header class="header position-absolute top-0 start-50 translate-middle">
+          <div class="details">
+            {% if user.profile.image %}
+            <img src="{{ profile.image.url }}" alt="{{ user.username }}" class="profile-pic">
+            {% else %}
+            <img src="{% static 'img/avatar.svg' %}" alt="{{ user.username }}" class="profile-pic">
+            {% endif %}
+            
+            <p><a href="{% url 'users:edit_profile' %}" class="link-light fw-bold fs-6 text-decoration-none">Edita tu perfil</a></p>
+            <h1 class="heading fw-bold link-light">@{{ user.username }}</h1>
+            <div class="location">
+                <p><strong class="link-light">Ultima Conexion:</strong> <span class="link-light">{{ user.last_login }}</span></p>
+            </div>
+            <div class="stats">
+                <p class="card-text link-light fw-bold"> Sobre mi:</p>
+                <span class="link-light">{{ user.profile.about_me }}</span>
+            </div>
+          </div>
+        </header>
+      </section>
+</body>
+{% endblock %}

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  
+<!-- css boostrap -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+
+
+
+<title>{% block head_title %}Bienvenido a mi blog{% endblock %}</title>
+
+</head>
+
+<body>
+  
+  <!--Navbar-->
+  <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="{% url 'nucleo:home' %}">
+        17ODS
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item d-flex">
+            <a class="nav-link {% if request.path == '/' %}active{% endif %} text-dark fw-bold" href="{% url 'nucleo:home' %}">Inicio</a>
+          </li>
+
+          {% if request.user.is_authenticated %}
+
+          <!-- Categorias en login -->
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle text-dark fw-bold" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              ODS
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+              {% for category in category_list %}
+                <a class="dropdown-item fw-bold" href="/category/{{ category.name}}">
+                {{ category.name|title }}
+                </a>
+              {% endfor %}
+            </ul>
+          </li>
+          <!-- Categorias en login cierro -->
+
+          <li class="nav-item d-flex">
+            <a class="nav-link {% if request.path == '/post/create/' %}active{% endif %} text-dark fw-bold" href="{% url 'nucleo:post_create' %}">Crear Post</a>
+          </li>
+
+          <li class="nav-item d-flex">
+            <a class="nav-link {% if request.user.username in request.path %}active{% endif %} text-dark fw-bold" href="{% url 'users:profile' request.user.username %}">Perfil</a>
+          </li>
+
+          <li class="nav-item d-flex">
+            <a class="nav-link text-dark fw-bold" href="{% url 'users:logout' %}">Salir</a>
+          </li>
+          {% else %}
+
+
+          <li class="nav-item d-flex">
+            <a class="nav-link text-dark fw-bold" href="#lista-articulos">Articulos</a>
+          </li>
+
+          <!-- Categorias -->
+          <li class="nav-item dropdown">
+            <a class="nav-link text-dark fw-bold dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              ODS
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+              {% for category in category_list %}
+                <a class="dropdown-item fw-bold" href="/category/{{ category.name}}">
+                {{ category.name|title }}
+                </a>
+              {% endfor %}
+            </ul>
+          </li>
+          <!-- Cierro Categorias -->
+
+          <li class="nav-item d-flex">
+            <a class="nav-link text-dark fw-bold" href="#">Contacto</a>
+          </li>
+          <li class="nav-item me-2">
+            <a class="btn btn-primary fw-bold ini {% if request.path == '/users/login/' %}active{% endif %}" href="{% url 'users:login' %}">Iniciar sesion</a>
+          </li>
+          <li class="nav-item">
+            <a class="btn btn-success fw-bold reg {% if request.path == '/users/signup/' %}active{% endif %}" href="{% url 'users:signup' %}">Registrarse</a>
+          </li>
+        </ul>
+        {% endif %}
+      </div>
+    </div>
+</nav>
+
+
+    {% for message in messages %}
+    <div class="alerta alert alert-{% if message.tags == 'error' %}warning{% else %}{{ message.tags }}{% endif %} 
+    alert-dismissible fade show" role="alert">
+    {{ message }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+
+    {% endfor %}
+    {% block content %}
+    {% endblock content %}
+
+
+
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+    integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+    crossorigin="anonymous"></script>
+
+    
+</body>
+
+</html>

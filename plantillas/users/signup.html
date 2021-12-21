@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% block head_title %}Registro{% endblock %}
+
+{% block content %}
+<div class="register-photo">
+  <div class="form-container">
+    <div class="image-holder"></div>
+    <form method="post">
+      <h2 class="text-center"><strong>Crea</strong> una cuenta.</h2>
+      {% csrf_token %}
+        <div class="form-group">
+            <input type="text" class="form-control mb-3 {% if form.username.errors %}is-invalid{% endif %}" id="id_username"
+              name="username" value='{{ form.username.value|default:"" }}' placeholder="Usuario">
+            {% if form.username.errors %}
+            <div class="invalid-feedback">{{ form.username.errors }}</div>
+            {% endif %}
+            </div>
+            
+         
+
+          <div class="form-group">
+            
+            <input type="email" class="form-control mb-3 {% if form.email.errors %}is-invalid{% endif %}" id="id_email"
+              name="email" value='{{ form.email.value|default:"" }}' placeholder="Email">
+            {% if form.email.errors %}
+            <div class="invalid-feedback">{{ form.email.errors }}</div>
+            {% endif %}
+            </div>
+
+
+          
+
+          <div class="form-group">
+            <input type="password" class="form-control mb-3 {% if form.password1.errors %}is-invalid{% endif %}"
+              id="id_password1" name="password1" value='{{ form.password1.value|default:"" }}' placeholder="Contraseña">
+      
+            {% if form.password1.errors %}
+            <div class="invalid-feedback">{{ form.password1.errors }}</div>
+            {% endif %}
+          </div>
+
+
+          <div class="form-group">
+            <input type="password" class="form-control mb-3 {% if form.password2.errors %}is-invalid{% endif %}"
+              id="id_password2" name="password2" value='{{ form.password2.value|default:"" }}' placeholder="Contraseña (repetir)">
+            
+            {% if form.password2.errors %}
+            <div class="invalid-feedback">{{ form.password2.errors }}</div>
+            {% endif %}
+          </div>
+
+         
+          <div class="form-group">
+            <div class="form-check"><label class="form-check-label"><input class="form-check-input" type="checkbox">Acepto los términos del sitio.</label></div>
+          </div>
+
+
+          <button type="submit" class="btn btn-success fw-bold reg mt-2">Registrarme</button>
+    </form>
+  </div>
+</div>
+{% endblock content %}
